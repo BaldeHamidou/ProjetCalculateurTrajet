@@ -5,22 +5,29 @@ import calculateur.interfaces.IStation;
 
 public class Relation implements IRelation{
 
+	private Station start;
+	private Station end;
+	private int distance;
+	
+	public Relation(Station start, Station end, int distance) {
+		this.start = start;
+		this.end = end;
+		this.distance = distance;
+	}
+	
 	@Override
 	public IStation getStartStation() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.start;
 	}
 
 	@Override
 	public IStation getEndStation() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.end;
 	}
 
 	@Override
 	public int getDistance() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.distance;
 	}
 
 }
