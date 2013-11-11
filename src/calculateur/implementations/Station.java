@@ -36,5 +36,9 @@ public class Station implements IStation{
 	public void addRelation(Relation r){
 		this.lr.add(r);
 	}
+	
+	public String getName(){
+		return this.name;
+	}
 
 }
