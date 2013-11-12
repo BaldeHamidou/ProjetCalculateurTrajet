@@ -8,8 +8,8 @@ import calculateur.interfaces.IStation;
 
 public class Station implements IStation{
 
-	private Station stationVoisine1;
-	private Station stationVoisine2;
+	private ArrayList<Station> stationsVoisines;
+	private ArrayList<Ligne> lstLigne;
 	private ArrayList<IRelation> lr;
 	private String name;
 	
@@ -30,7 +30,7 @@ public class Station implements IStation{
 	}
 
 	@Override
-	public ArrayList<IRelation> getRelations() {
+	public List<IRelation> getRelations() {
 		return this.lr;
 	}
 	public void addRelation(Relation r){

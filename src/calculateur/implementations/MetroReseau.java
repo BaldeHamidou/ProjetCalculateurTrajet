@@ -2,8 +2,6 @@ package calculateur.implementations;
 
 
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,13 +17,13 @@ public class MetroReseau implements IReseau{
 	public MetroReseau(CSVReader arretLigne, CSVReader arretGraph) {
 		this.arretLigne = arretLigne;
 		this.arretGraph = arretGraph;
+		this.stationID = new ArrayList<Station>();
 	}
 
 	@Override
 	public void loadReseauFromCSV() throws IOException {
 		
 		
-		ArrayList<Station> stationID = new ArrayList<Station>();
 	    String [] nextLine;
 	    String [] nextLineBis;
 	    while ((nextLine = this.arretLigne.readNext()) != null) {
