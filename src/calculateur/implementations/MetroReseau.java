@@ -2,55 +2,59 @@ package calculateur.implementations;
 
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import au.com.bytecode.opencsv.CSVReader;
 import calculateur.interfaces.IReseau;
 
 public class MetroReseau implements IReseau{
 	
-	private CSVReader arretLigne;
-	private CSVReader arretGraph;
-	private ArrayList<Station> stationID;
+	public final static char SEPARATOR = ';';	
+	
+	private File file;
+	private ArrayList<String> data;
+	private ArrayList<String[] > lMetro;
 
-	public MetroReseau(CSVReader arretLigne, CSVReader arretGraph) {
-		this.arretLigne = arretLigne;
-		this.arretGraph = arretGraph;
-		this.stationID = new ArrayList<Station>();
+	public MetroReseau(File listeMetro) throws IOException {
+		
+		this.data = new ArrayList<String>();
+		this.lMetro = new ArrayList<String[]>();
+		this.file = listeMetro;
+
+        // Init
+		loadReseauFromCSV();
+
 	}
 
 	@Override
 	public void loadReseauFromCSV() throws IOException {
 		
-		
-	    String [] nextLine;
-	    String [] nextLineBis;
-	    while ((nextLine = this.arretLigne.readNext()) != null) {
-	    	String nom = "";
-	    	String [] spliter = nextLine[0].split("#");
+		this.data = CsvFileHelper.readFile(file);
 
-	    	while ((nextLineBis = this.arretGraph.readNext()) != null) {
-	    		String [] spliterBis = nextLineBis[0].split("#");
-	    		if(spliter[0].equals(spliterBis[0])){	    			
-	    			
-	    			nom = spliterBis[3];
-	    			
-	    		}	
-	    	}
-	    	
-	    	if (nom != null){	    	
-	    		this.stationID.add(new Station(nom));
-	    	}
+		lMetro = new ArrayList<String[] >(this.data.size());
+        String sep = new Character(SEPARATOR).toString();
+        for (String line : this.data) {
+            String[] oneData = line.split(sep);
+            lMetro.add(oneData);
+        }
 
-	    }
-	    
-	    
-	    // pour test !
-	    for (int i = 0; i< stationID.size(); i++){
-	    	System.out.println(stationID.get(i).getName());
-	    }
-		
+        // On peut repeter cette procedure (au dessus) autant que l'on veut pour d'autre CSV
+        
+        
 	}
+
+	public ArrayList<String[]> getlMetro() {
+		return lMetro;
+	}
+
+	public void setlMetro(ArrayList<String[]> lMetro) {
+		this.lMetro = lMetro;
+	}
+	
+
 
 }
