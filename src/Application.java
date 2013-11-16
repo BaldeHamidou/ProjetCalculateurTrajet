@@ -1,6 +1,4 @@
-import java.io.FileReader;
 import java.io.IOException;
-
 import calculateur.implementations.CsvFileHelper;
 import calculateur.implementations.MetroReseau;
 
@@ -11,9 +9,7 @@ public class Application {
 	public static void main(String[] args) throws IOException {
 		
 		MetroReseau mr = new MetroReseau(CsvFileHelper.getResource(LISTE_METRO));
-		mr.loadReseauFromCSV();
-		
-		
+		mr.loadReseauFromCSV();		
 		
 		//TEST sur la première station!
 		System.out.println(mr.getlMetro().get(1)[1]);
