@@ -1,44 +1,82 @@
 package calculateur.implementations;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import calculateur.interfaces.ILigne;
 import calculateur.interfaces.IRelation;
 import calculateur.interfaces.IStation;
 
 public class Station implements IStation{
 
-	private ArrayList<Station> stationsVoisines;
-	private ArrayList<Ligne> lstLigne;
-	private ArrayList<IRelation> lr;
+	private ArrayList<IStation> stationsVoisines;
+	private ArrayList<ILigne> lstLignes;
+	private ArrayList<IRelation> lstRelation;
 	private String name;
-	
+	private boolean isTerminus;
 	
 	public Station(String name) {
 		this.name = name;
-		this.lr = new ArrayList<IRelation>();
+		this.lstRelation = new ArrayList<IRelation>();
+		this.isTerminus = false;
 	}
 	
-	public Station(String name, Station end, int weight) {
+	public Station(String name, boolean isterminus) {
 		this.name = name;
-		this.lr.add(new Relation(this, end, weight));
+		this.lstRelation = new ArrayList<IRelation>();
+		this.isTerminus = isterminus;
 	}
 	
-	public Station(String name, IRelation relation){
+	public Station(String name, boolean isterminus, ArrayList<ILigne> lignes, ArrayList<IStation> stationsVois, ArrayList<IRelation> relations) {
 		this.name = name;
-		this.lr.add(relation);
+		this.isTerminus = isterminus;
+		this.lstLignes = lignes;
+		this.stationsVoisines = stationsVois;
+		this.lstRelation = relations;
+	}
+	
+	public Station(String name, ArrayList<ILigne> lignes, ArrayList<IStation> stationsVois, ArrayList<IRelation> relations) {
+		this.name = name;
+		this.isTerminus = false;
+		this.lstLignes = lignes;
+		this.stationsVoisines = stationsVois;
+		this.lstRelation = relations;
 	}
 
 	@Override
-	public List<IRelation> getRelations() {
-		return this.lr;
+	public ArrayList<IRelation> getRelations() {
+		return this.lstRelation;
 	}
-	public void addRelation(Relation r){
-		this.lr.add(r);
+	
+	public ArrayList<IStation> getStationsVoisines(){
+		return this.stationsVoisines;
+	}
+	
+	public ArrayList<ILigne> getLstLignes(){
+		return this.lstLignes;
 	}
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public boolean isTerminus(){
+		return this.isTerminus;
+	}
+	
+	public void setName(String nom){
+		this.name = nom;
+	}
+	
+	public void addRelation(Relation relation){
+		this.lstRelation.add(relation);
+	}
+	
+	public void addStationVoisine(Station stationVoisine){
+		this.stationsVoisines.add(stationVoisine);
+	}
+	
+	public void addLigne(Ligne ligne){
+		this.lstLignes.add(ligne);
 	}
 
 }

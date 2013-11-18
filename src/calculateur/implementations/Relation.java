@@ -5,29 +5,28 @@ import calculateur.interfaces.IStation;
 
 public class Relation implements IRelation{
 
-	private Station start;
-	private Station end;
-	private int distance;
+	private Station depart;
+	private Station arrivee;
+	private String direction;
 	
-	public Relation(Station start, Station end, int distance) {
-		this.start = start;
-		this.end = end;
-		this.distance = distance;
+	public Relation(Station depart, Station arrivee, String direction) {
+		this.depart = depart;
+		this.arrivee = arrivee;
+		this.direction = direction;
 	}
 	
 	@Override
-	public IStation getStartStation() {
-		return this.start;
+	public IStation getStationDepart() {
+		return this.depart;
 	}
 
 	@Override
-	public IStation getEndStation() {
-		return this.end;
+	public IStation getStationArrivee() {
+		return this.arrivee;
 	}
 
-	@Override
-	public int getDistance() {
-		return this.distance;
+	public String getDirection() {
+		return this.direction;
 	}
 
 }

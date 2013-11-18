@@ -1,9 +1,8 @@
 package calculateur.interfaces;
 
-import java.util.List;
-
-import calculateur.interfaces.IRelation;
+import java.util.ArrayList;
 
 public interface IStation {
-	public List<IRelation> getRelations();
+	public ArrayList<IRelation> getRelations();
+	public String getName();
 }
