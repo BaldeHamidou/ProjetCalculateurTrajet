@@ -29,4 +29,17 @@ public class Relation implements IRelation{
 		return this.direction;
 	}
 
+	public void setDirection(String direction){
+		this.direction = direction;
+	}
+
+	public void setDepart(Station depart) {
+		this.depart = depart;
+	}
+
+	public void setArrivee(Station arrivee) {
+		this.arrivee = arrivee;
+	}
+	
+	
 }

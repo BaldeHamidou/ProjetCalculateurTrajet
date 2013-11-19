@@ -49,4 +49,11 @@ public class Ligne implements ILigne {
 		return -1;
 	}
 
+	@Override
+	public String toString() {
+		return nameLigne;
+	}
+	
+	
+
 }

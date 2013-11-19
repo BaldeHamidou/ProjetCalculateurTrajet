@@ -65,8 +65,24 @@ public class Station implements IStation{
 	
 	public void setName(String nom){
 		this.name = nom;
-	}
+	}	
 	
+	public void setStationsVoisines(ArrayList<IStation> stationsVoisines) {
+		this.stationsVoisines = stationsVoisines;
+	}
+
+	public void setLstLignes(ArrayList<ILigne> lstLignes) {
+		this.lstLignes = lstLignes;
+	}
+
+	public void setLstRelation(ArrayList<IRelation> lstRelation) {
+		this.lstRelation = lstRelation;
+	}
+
+	public void setIsTerminus(boolean isTerminus) {
+		this.isTerminus = isTerminus;
+	}
+
 	public void addRelation(Relation relation){
 		this.lstRelation.add(relation);
 	}
@@ -79,4 +95,8 @@ public class Station implements IStation{
 		this.lstLignes.add(ligne);
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
 }
