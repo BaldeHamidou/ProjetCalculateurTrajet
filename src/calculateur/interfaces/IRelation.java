@@ -1,6 +1,8 @@
 package calculateur.interfaces;
 
+import calculateur.abstracts.Station;
+
 public interface IRelation {
-	public IStation getStationDepart();
-	public IStation getStationArrivee();
+	public Station getStationDepart();
+	public Station getStationArrivee();
 }

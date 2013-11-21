@@ -1,9 +1,8 @@
-package calculateur.implementations;
+package calculateur.abstracts;
 
 import calculateur.interfaces.IRelation;
-import calculateur.interfaces.IStation;
 
-public class Relation implements IRelation{
+public abstract class Relation implements IRelation, Comparable<Relation>{
 
 	private Station depart;
 	private Station arrivee;
@@ -16,12 +15,12 @@ public class Relation implements IRelation{
 	}
 	
 	@Override
-	public IStation getStationDepart() {
+	public Station getStationDepart() {
 		return this.depart;
 	}
 
 	@Override
-	public IStation getStationArrivee() {
+	public Station getStationArrivee() {
 		return this.arrivee;
 	}
 
@@ -30,15 +29,26 @@ public class Relation implements IRelation{
 	}
 
 	public void setDirection(String direction){
+		if(direction != null && direction.trim() != "")
 		this.direction = direction;
 	}
 
 	public void setDepart(Station depart) {
+		if(depart != null)
 		this.depart = depart;
 	}
 
 	public void setArrivee(Station arrivee) {
+		if(arrivee != null)
 		this.arrivee = arrivee;
+	}
+
+	@Override
+	public int compareTo(Relation arg0) {
+		if(arg0.getStationArrivee().equals(arrivee) && arg0.getStationDepart().equals(depart) && arg0.getDirection().equals(direction))
+			return 0;
+		else
+			return -1;
 	}
 	
 	

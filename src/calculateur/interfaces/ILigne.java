@@ -2,7 +2,7 @@ package calculateur.interfaces;
 
 import java.util.ArrayList;
 
-import calculateur.implementations.Station;
+import calculateur.abstracts.Station;
 
 public interface ILigne {
 	public void setNameLigne(String name);

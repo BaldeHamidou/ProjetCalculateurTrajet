@@ -1,4 +1,4 @@
-package calculateur.implementations;
+package Tools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,8 +40,14 @@ public class CsvFileHelper {
 		return result;
 	}
 
-	public static ArrayList<String> readFileLstLignes() throws IOException {
-		return readFile(new File("MetroReseau"+File.separator+"ListeLignes.csv"));
+	public static ArrayList<String[]> readFileLstLignes() throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("MetroReseau"+File.separator+"ListeLignes.csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
 	}
 
 	public static ArrayList<String[]> readFileLstStations() throws IOException {

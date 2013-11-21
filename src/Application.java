@@ -1,6 +1,6 @@
 import java.io.IOException;
-import calculateur.implementations.CsvFileHelper;
-import calculateur.implementations.MetroReseau;
+
+import calculateur.implementations.ReseauMetro;
 
 public class Application {
 	
@@ -18,7 +18,7 @@ public class Application {
 		System.out.println(mr.getlMetro().get(1)[4]);
 		// --*/
 		
-		MetroReseau ratpMetro = new MetroReseau();
+		ReseauMetro ratpMetro = new ReseauMetro();
 		ratpMetro.loadReseauFromCSV();
 	}
 }

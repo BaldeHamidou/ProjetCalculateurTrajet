@@ -1,18 +1,19 @@
-package calculateur.implementations;
+package calculateur.abstracts;
 
 import calculateur.interfaces.IModalite;
 import calculateur.interfaces.IReseau;
 
-public class MetroModalite implements IModalite{
+public abstract class Modalite implements IModalite{
 
 	private IReseau reseauMetro;
+	// appliquer Dijkstra sur la modalité ? à quoi sert la modalité ?
 	
-	public MetroModalite(IReseau reseau){
+	public Modalite(IReseau reseau){
 		this.reseauMetro = reseau;
 	}
 	
 	@Override
-	public void setReseau(IReseau reseau) {
+	public void setReseau(Reseau reseau) {
 		this.reseauMetro = reseau;
 	}
 	

@@ -1,34 +1,48 @@
-package calculateur.implementations;
+package calculateur.abstracts;
 
 import java.util.ArrayList;
 
 import calculateur.interfaces.ILigne;
 
-public class Ligne implements ILigne {
+public abstract class Ligne implements ILigne, Comparable<Ligne> {
 
 	private String nameLigne;
 	private ArrayList<Station> listeStation;
+	private ArrayList<Station> listeTerminus;
 
 	public Ligne(String nameLigne) {
 		this.nameLigne = nameLigne;
 		this.listeStation = new ArrayList<Station>();
+		this.listeTerminus = new ArrayList<Station>();
 	}
 
-	public Ligne(String nameLigne, ArrayList<Station> listeStation) {
+	public Ligne(String nameLigne, ArrayList<Station> listeStation, ArrayList<Station> terminus) {
 		this.nameLigne = nameLigne;
 		this.listeStation = listeStation;
+		this.listeTerminus = terminus;
 	}
 
 	public void addStation(Station station) {
+		if(station != null && !this.listeStation.contains(station))
 		this.listeStation.add(station);
 	}
 
+	public void addTerminus(Station station) {
+		if(station != null && !this.listeTerminus.contains(station))
+		this.listeTerminus.add(station);
+	}
+	
 	public ArrayList<Station> getListStation() {
 		return this.listeStation;
 	}
 
+	public ArrayList<Station> getListeTerminus() {
+		return listeTerminus;
+	}
+
 	@Override
 	public void setNameLigne(String name) {
+		if(name != null && name.trim() != "")
 		this.nameLigne = name;
 	}
 
@@ -52,6 +66,14 @@ public class Ligne implements ILigne {
 	@Override
 	public String toString() {
 		return nameLigne;
+	}
+
+	@Override
+	public int compareTo(Ligne o) {
+		if(o.getNameLigne().equals(nameLigne))
+		return 0;
+		else
+			return -1;
 	}
 	
 	
