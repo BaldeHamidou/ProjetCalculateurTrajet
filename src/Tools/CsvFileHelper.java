@@ -58,4 +58,14 @@ public class CsvFileHelper {
 		}
 		return lstDonneesStations;
 	}
+	
+	public static ArrayList<String[]> readFilesLignes(String ligne) throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("MetroReseau"+File.separator+"Ligne"+ligne+".csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
+	}
 }

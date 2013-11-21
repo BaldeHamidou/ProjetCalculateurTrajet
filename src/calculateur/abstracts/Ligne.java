@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import calculateur.interfaces.ILigne;
 
-public abstract class Ligne implements ILigne, Comparable<Ligne> {
+public abstract class Ligne implements ILigne {
 
 	private String nameLigne;
 	private ArrayList<Station> listeStation;
@@ -36,7 +36,7 @@ public abstract class Ligne implements ILigne, Comparable<Ligne> {
 		return this.listeStation;
 	}
 
-	public ArrayList<Station> getListeTerminus() {
+	public ArrayList<Station> getListTerminus() {
 		return listeTerminus;
 	}
 
@@ -61,21 +61,6 @@ public abstract class Ligne implements ILigne, Comparable<Ligne> {
 		}
 
 		return -1;
-	}
-
-	@Override
-	public String toString() {
-		return nameLigne;
-	}
-
-	@Override
-	public int compareTo(Ligne o) {
-		if(o.getNameLigne().equals(nameLigne))
-		return 0;
-		else
-			return -1;
-	}
-	
-	
+	}	
 
 }

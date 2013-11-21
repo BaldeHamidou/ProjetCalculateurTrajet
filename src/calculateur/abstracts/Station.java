@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import calculateur.implementations.RelationMetro;
 import calculateur.interfaces.IStation;
 
-public abstract class Station implements IStation, Comparable<Station> {
+public abstract class Station implements IStation {
 
 	private ArrayList<Station> stationsVoisines;
 	private ArrayList<Ligne> lstLignes;
@@ -74,18 +74,5 @@ public abstract class Station implements IStation, Comparable<Station> {
 	public void addLigne(Ligne ligne) {
 		if (ligne != null && !this.lstLignes.contains(ligne))
 			this.lstLignes.add(ligne);
-	}
-
-	@Override
-	public String toString() {
-		return name;
-	}
-
-	@Override
-	public int compareTo(Station o) {
-		if (o.getName().equals(name))
-			return 0;
-		else
-			return -1;
 	}
 }
