@@ -11,8 +11,8 @@ public class LigneMetro extends Ligne implements Comparable<LigneMetro> {
 		super(nameLigne);
 	}
 
-	public LigneMetro(String nameLigne, ArrayList<Station> listeStation, ArrayList<Station> listeTerminus) {
-		super(nameLigne, listeStation, listeTerminus);
+	public LigneMetro(String nameLigne, ArrayList<Station> listeStation, ArrayList<Station> listeTerminus, ArrayList<Ligne> correspondance) {
+		super(nameLigne, listeStation, listeTerminus, correspondance);
 	}
 
 	@Override

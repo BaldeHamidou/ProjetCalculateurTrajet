@@ -48,7 +48,7 @@ public class ReseauMetro extends Reseau {
 						lstDonneesLignes.get(i)[0]));
 			}
 
-			// ajout des terminus et stations de chaque Ligne
+			/* ajout des terminus, stations et ligne de correspondance de chaque Ligne */
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
 				String idLigne = lstDonneesLignes.get(i)[0];
 
@@ -66,6 +66,7 @@ public class ReseauMetro extends Reseau {
 							mapStation.get(DonneesLigne.get(k)[0]));
 				}
 			}
+			
 			System.out.println(mapLigne);
 	//-------------------------------traitement Lignes end ----------------------------------------//
 		
@@ -77,57 +78,34 @@ public class ReseauMetro extends Reseau {
 				}
 			}
 			System.out.println(mapStation);
-			
+	//-------------------------------traitment Station end ----------------------------------------//	
+					
+	//-------------------------------traitement Lignes begin ----------------------------------------//
+			// ajout des lignes de correspondances par ligne de Metro
+			for (int i = 0; i < lstDonneesLignes.size(); i++) {
+				String idLigne = lstDonneesLignes.get(i)[0];
+				ArrayList<String[]> DonneesLigne = CsvFileHelper
+						.readFilesLignes(idLigne);
+				for (int j = 0; j < DonneesLigne.size(); j++) {
+					for(int k =0; k<mapStation.get(DonneesLigne.get(j)[0]).getLstLignes().size(); k++){
+						mapLigne.get(idLigne).addCorrespondance(mapStation.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
+					}
+				}
+				System.out.println("Ligne"+idLigne+" Correspondance:"+mapLigne.get(idLigne).getListCorrespondance());
+			}
+	//-------------------------------traitement Lignes end ----------------------------------------//
+		
+	//-------------------------------traitment Station begin ----------------------------------------//
 			// la suite arrive :) :
 			
-			// ajout relations de chaque stations
+			// ajout relations de chaque stations et stations voisines
 			// cas spéciaux lignes 7, 7bis ,10 et 13
 	//-------------------------------traitment Station end ----------------------------------------//
-					
-
+			
 		} catch (IOException e) {
 			System.out.println("Problème d'ouverture fichier CSV");
 		}
 
 	}
-
-	// public final static char SEPARATOR = ';';
-
-	/*
-	 * private File file; private ArrayList<String> data; private
-	 * ArrayList<String[] > lMetro;
-	 */
-
-	/*
-	 * public MetroReseau(File listeMetro) throws IOException {
-	 * 
-	 * this.data = new ArrayList<String>(); this.lMetro = new
-	 * ArrayList<String[]>(); this.file = listeMetro;
-	 * 
-	 * // Init loadReseauFromCSV();
-	 * 
-	 * }
-	 */
-
-	/*
-	 * @Override public void loadReseauFromCSV() throws IOException {
-	 * 
-	 * this.data = CsvFileHelper.readFile(file);
-	 * 
-	 * lMetro = new ArrayList<String[] >(this.data.size()); String sep = new
-	 * Character(SEPARATOR).toString(); for (String line : this.data) { String[]
-	 * oneData = line.split(sep); lMetro.add(oneData); }
-	 * 
-	 * // On peut repeter cette procedure (au dessus) autant que l'on veut pour
-	 * d'autre CSV
-	 * 
-	 * 
-	 * }
-	 * 
-	 * public ArrayList<String[]> getlMetro() { return lMetro; }
-	 * 
-	 * public void setlMetro(ArrayList<String[]> lMetro) { this.lMetro = lMetro;
-	 * }
-	 */
 
 }
