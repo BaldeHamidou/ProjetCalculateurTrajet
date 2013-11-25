@@ -12,13 +12,21 @@ import calculateur.abstracts.Reseau;
 import calculateur.abstracts.Station;
 
 public class ReseauMetro extends Reseau {
-
+	
+	private Map<String, Station> mapStations;
+	private Map<String, Ligne> mapLignes;
+	
 	public ReseauMetro() {
 		super();
+		mapStations = new HashMap<String, Station>();
+		mapLignes = new HashMap<String, Ligne>();
+		loadReseauFromCSV();
 	}
 
-	public ReseauMetro(Map<Station, ArrayList<Relation>> grapheR) {
+	public ReseauMetro(Map<Station, ArrayList<Relation>> grapheR, Map<String, Station> stations, Map<String, Ligne> lignes) {
 		super(grapheR);
+		mapLignes = lignes;
+		mapStations = stations;
 	}
 
 	public void loadReseauFromCSV() {
@@ -30,21 +38,17 @@ public class ReseauMetro extends Reseau {
 					.readFileLstStations();
 
 			 //------------------------------- traitement Stations begin ----------------------------------------//
-			// création de la Map des stations (à vide : juste avec leur nom)
-			Map<String, Station> mapStation = new HashMap<String, Station>();
-
+			// ajout des stations à la map(à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
-				mapStation.put(lstDonneesStations.get(i)[0], new StationMetro(
+				mapStations.put(lstDonneesStations.get(i)[0], new StationMetro(
 						lstDonneesStations.get(i)[1]));
 			}
           //-------------------------------traitement Stations end ----------------------------------------//
 		  
 		 //-------------------------------traitement Lignes begin ----------------------------------------//
-			// création de la Map des lignes (à vide : juste avec leur nom)
-			Map<String, Ligne> mapLigne = new HashMap<String, Ligne>();
-
+			// ajout des lignes à la map (à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
-				mapLigne.put(lstDonneesLignes.get(i)[0], new LigneMetro(
+				mapLignes.put(lstDonneesLignes.get(i)[0], new LigneMetro(
 						lstDonneesLignes.get(i)[0]));
 			}
 
@@ -54,30 +58,30 @@ public class ReseauMetro extends Reseau {
 
 				// ajout des stations terminus pour chaque ligne
 				for (int j = 1; j < lstDonneesLignes.get(i).length; j++) {
-					mapLigne.get(idLigne).addTerminus(
-							mapStation.get(lstDonneesLignes.get(i)[j]));
+					mapLignes.get(idLigne).addTerminus(
+							mapStations.get(lstDonneesLignes.get(i)[j]));
 				}
 
 				// ajout stations d'une ligne
 				ArrayList<String[]> DonneesLigne = CsvFileHelper
 						.readFilesLignes(idLigne);
 				for (int k = 0; k < DonneesLigne.size(); k++) {
-					mapLigne.get(idLigne).addStation(
-							mapStation.get(DonneesLigne.get(k)[0]));
+					mapLignes.get(idLigne).addStation(
+							mapStations.get(DonneesLigne.get(k)[0]));
 				}
 			}
 			
-			System.out.println(mapLigne);
+			System.out.println(mapLignes);
 	//-------------------------------traitement Lignes end ----------------------------------------//
 		
 	//-------------------------------traitment Station begin ----------------------------------------//
 			// ajout lignes aux stations
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				for (int j = 2; j < lstDonneesStations.get(i).length; j++) {
-					mapStation.get(lstDonneesStations.get(i)[0]).addLigne(mapLigne.get(lstDonneesStations.get(i)[j]));
+					mapStations.get(lstDonneesStations.get(i)[0]).addLigne(mapLignes.get(lstDonneesStations.get(i)[j]));
 				}
 			}
-			System.out.println(mapStation);
+			System.out.println(mapStations);
 	//-------------------------------traitment Station end ----------------------------------------//	
 					
 	//-------------------------------traitement Lignes begin ----------------------------------------//
@@ -87,11 +91,11 @@ public class ReseauMetro extends Reseau {
 				ArrayList<String[]> DonneesLigne = CsvFileHelper
 						.readFilesLignes(idLigne);
 				for (int j = 0; j < DonneesLigne.size(); j++) {
-					for(int k =0; k<mapStation.get(DonneesLigne.get(j)[0]).getLstLignes().size(); k++){
-						mapLigne.get(idLigne).addCorrespondance(mapStation.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
+					for(int k =0; k<mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().size(); k++){
+						mapLignes.get(idLigne).addCorrespondance(mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
 					}
 				}
-				System.out.println("Ligne"+idLigne+" Correspondance:"+mapLigne.get(idLigne).getListCorrespondance());
+				System.out.println("Ligne"+idLigne+" Correspondance:"+mapLignes.get(idLigne).getListCorrespondance());
 			}
 	//-------------------------------traitement Lignes end ----------------------------------------//
 		
@@ -107,5 +111,15 @@ public class ReseauMetro extends Reseau {
 		}
 
 	}
+
+	public Map<String, Station> getMapStations() {
+		return mapStations;
+	}
+
+	public Map<String, Ligne> getMapLignes() {
+		return mapLignes;
+	}
+	
+	
 
 }
