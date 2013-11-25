@@ -19,7 +19,7 @@ public class StationMetro extends Station implements Comparable<StationMetro>{
 	
 	@Override
 	public String toString() {
-		return getName()+" Ligne(s):"+getLstLignes();
+		return getName()/*+" Ligne(s):"+getLstLignes()*/;
 	}
 
 	@Override

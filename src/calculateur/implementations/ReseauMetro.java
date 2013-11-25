@@ -69,9 +69,10 @@ public class ReseauMetro extends Reseau {
 					mapLignes.get(idLigne).addStation(
 							mapStations.get(DonneesLigne.get(k)[0]));
 				}
+				//System.out.println(idLigne+" terminus:"+mapLignes.get(idLigne).getListTerminus());
 			}
 			
-			System.out.println(mapLignes);
+			//System.out.println(mapLignes);
 	//-------------------------------traitement Lignes end ----------------------------------------//
 		
 	//-------------------------------traitment Station begin ----------------------------------------//
@@ -81,7 +82,7 @@ public class ReseauMetro extends Reseau {
 					mapStations.get(lstDonneesStations.get(i)[0]).addLigne(mapLignes.get(lstDonneesStations.get(i)[j]));
 				}
 			}
-			System.out.println(mapStations);
+		//	System.out.println(mapStations);
 	//-------------------------------traitment Station end ----------------------------------------//	
 					
 	//-------------------------------traitement Lignes begin ----------------------------------------//
@@ -95,19 +96,38 @@ public class ReseauMetro extends Reseau {
 						mapLignes.get(idLigne).addCorrespondance(mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
 					}
 				}
-				System.out.println("Ligne"+idLigne+" Correspondance:"+mapLignes.get(idLigne).getListCorrespondance());
+			//	System.out.println("Ligne"+idLigne+" Correspondance:"+mapLignes.get(idLigne).getListCorrespondance());
 			}
 	//-------------------------------traitement Lignes end ----------------------------------------//
 		
 	//-------------------------------traitment Station begin ----------------------------------------//
-			// la suite arrive :) :
-			
 			// ajout relations de chaque stations et stations voisines
+			for (int i = 0; i < lstDonneesStations.size(); i++) {
+				ArrayList<Ligne> lignes = mapStations.get(lstDonneesStations.get(i)[0]).getLstLignes();
+				for(int j=0; j<lignes.size(); j++){
+					ArrayList<String[]> DonneesLigne = CsvFileHelper
+							.readFilesLignes(lignes.get(j).getNameLigne());
+					int k = 0;
+					while(!lstDonneesStations.get(i)[0].toString().equals(DonneesLigne.get(k)[0].toString()))
+						k++;
+					
+					if((k-1)>=0 && (Integer.parseInt(DonneesLigne.get(k-1)[2]) == Integer.parseInt(DonneesLigne.get(k)[2])-1)){
+						mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k-1)[0]));
+					}
+					
+					if((k+1)<DonneesLigne.size() && (Integer.parseInt(DonneesLigne.get(k+1)[2]) == Integer.parseInt(DonneesLigne.get(k)[2])+1)){
+						mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k+1)[0]));
+					}
+				}
+				System.out.println(lstDonneesStations.get(i)[1]+": Stations voisines:"+mapStations.get(lstDonneesStations.get(i)[0]).getStationsVoisines());
+			}
 			// cas spéciaux lignes 7, 7bis ,10 et 13
+			
+			// la suite arrive :)
 	//-------------------------------traitment Station end ----------------------------------------//
 			
 		} catch (IOException e) {
-			System.out.println("Problème d'ouverture fichier CSV");
+			System.out.println(e.getMessage()+" Problème d'ouverture fichier CSV");
 		}
 
 	}

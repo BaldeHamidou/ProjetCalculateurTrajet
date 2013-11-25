@@ -19,6 +19,7 @@ public class LigneMetro extends Ligne implements Comparable<LigneMetro> {
 	public String toString() {
 		return "(M)"+getNameLigne();//+" Terminus:"+getListTerminus()+" Stations:"+getListStation();
 	}
+	
 
 	@Override
 	public int compareTo(LigneMetro o) {
