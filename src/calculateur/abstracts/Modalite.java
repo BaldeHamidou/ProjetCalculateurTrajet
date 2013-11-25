@@ -5,20 +5,21 @@ import calculateur.interfaces.IReseau;
 
 public abstract class Modalite implements IModalite{
 
-	private IReseau reseauMetro;
+	private IReseau reseau;
 	// appliquer Dijkstra sur la modalité ? à quoi sert la modalité ?
 	
+	public Modalite(){} 
 	public Modalite(IReseau reseau){
-		this.reseauMetro = reseau;
+		this.reseau = reseau;
 	}
 	
 	@Override
 	public void setReseau(Reseau reseau) {
-		this.reseauMetro = reseau;
+		this.reseau = reseau;
 	}
 	
 	public IReseau getReseau(){
-		return this.reseauMetro;
+		return this.reseau;
 	}
 
 }

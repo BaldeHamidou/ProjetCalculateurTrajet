@@ -9,4 +9,7 @@ public class RelationMetro extends Relation{
 		super(depart, arrivee, direction);
 	}
 
+	public String toString(){
+		return getStationDepart()+" "+getStationArrivee()+" direction:"+getDirection();
+	}
 }
