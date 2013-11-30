@@ -11,12 +11,14 @@ public abstract class Station implements IStation {
 	private ArrayList<Ligne> lstLignes;
 	private ArrayList<Relation> lstRelation;
 	private String name;
+	private boolean visited;
 
 	public Station(String name) {
 		this.name = name;
 		this.lstRelation = new ArrayList<Relation>();
 		this.lstLignes = new ArrayList<Ligne>();
 		this.stationsVoisines = new ArrayList<Station>();
+		this.visited = false;
 	}
 
 	public Station(String name, ArrayList<Ligne> lignes,
@@ -25,6 +27,7 @@ public abstract class Station implements IStation {
 		this.lstLignes = lignes;
 		this.stationsVoisines = stationsVois;
 		this.lstRelation = relations;
+		this.visited = false;
 	}
 
 	@Override
@@ -75,4 +78,8 @@ public abstract class Station implements IStation {
 		if (ligne != null && !this.lstLignes.contains(ligne))
 			this.lstLignes.add(ligne);
 	}
+	
+	public boolean getVisited() { return this.visited; }
+	public void setVisited(boolean b) { visited=b; }
+
 }

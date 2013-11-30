@@ -1,32 +1,17 @@
 package calculateur.implementations;
 
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Stack;
+
 import calculateur.abstracts.Relation;
 import calculateur.abstracts.Reseau;
 import calculateur.abstracts.Station;
 import calculateur.interfaces.IAlgoCalcul;
 import calculateur.interfaces.IReseau;
-
-
-class DjikstraNode {
-	Station node = null;
-	DjikstraNode previous = null;
-	int distance = -1;
-	boolean visited = false;
-	DjikstraNode(Station node) { this.node = node; }
-	public void setDistance(int distance) { this.distance = distance; }
-	public int getDistance() { return this.distance; }
-	String getName() { return node.getName(); }
-	
-	@Override
-	public String toString() { return getName() + " : " + this.distance; }
-	public Station getNode() { return this.node; }
-}
 
 
 /*	ALGORITHME DE DIJKSTRA
@@ -54,33 +39,23 @@ QUAND LE SOMMET S EST DÉFINTIVEMENT MARQUÉ
 Le plus court chemin de E à S s'obtient en écrivant de gauche à droite le parcours en partant de la fin S.  */
 
 
-
 public class Dijkstra implements IAlgoCalcul{
-	
+
 	private Map<Station, ArrayList<Relation>> g;
 	
 	public Dijkstra (Reseau r){
 		this.g = r.getGrapheReseau();
 	}
 	
-	Map<Station, DjikstraNode> subGraph = new HashMap<Station, DjikstraNode>();
-	PriorityQueue<DjikstraNode> next = new PriorityQueue<DjikstraNode>(10, new Comparator<DjikstraNode>() {
-		@Override
-		public int compare(DjikstraNode o1, DjikstraNode o2) {
-			return o1.getDistance()>o2.getDistance() ? 1
-				:  o1.getDistance()<o2.getDistance() ? -1
-				:  0; 
-		}
-	});
-	
-	
-	// Ce n'est qu'un début.. J'essaye. Si tu as des idées hésite pas ! ;)   
-	// La classe IGrapheEdge correspond en quelque sorte à la classe Relation faut donc réussir à adpater Relation sous se modele la :s.
-	
-	
 	@Override
-	public IReseau plusRapideChemin(String depart, String arrivee) {
+	public IReseau plusRapideChemin(Station depart, Station arrivee) {
 				
+		
+		for (Station stationKey : this.g.keySet()) {
+			// utilise ici hashMap.get(mapKey) pour accéder aux valeurs
+		}
+		
+		
 		return null; 
 	}
 
