@@ -49,13 +49,42 @@ public class Dijkstra implements IAlgoCalcul{
 	
 	@Override
 	public IReseau plusRapideChemin(Station depart, Station arrivee) {
-				
 		
-		for (Station stationKey : this.g.keySet()) {
-			// utilise ici hashMap.get(mapKey) pour accéder aux valeurs
+		boolean memeLigne = false;
+		
+		for(int i = 0; i<depart.getLstLignes().size(); i++){
+			for(int j = 0; j<arrivee.getLstLignes().size(); j++){
+				if(depart.getLstLignes().get(i).getNameLigne().equals(arrivee.getLstLignes().get(j).getNameLigne())){
+					memeLigne=true;
+				}
+			}
 		}
 		
-		
+		if(memeLigne){ // La station d'arrivée est sur la meme ligne que la station de depart
+			
+		}else{ // La station d'arrivée est sur une ligne différente
+			
+			Map<Station, Integer> subGraph = new HashMap<Station, Integer>();
+			
+			// On parcourt la ligne pour trouver des correspondances.
+			for(int i = 0; i<depart.getLstLignes().size(); i++){
+				for(int j = 0; j<depart.getLstLignes().get(i).getListStation().size(); j++){
+					if(depart.getLstLignes().get(i).getListStation().get(j).getLstLignes().size()>1){
+						// Map des prochaine correspondance possible avec leur distance par rapport au depart
+						subGraph.put(depart.getLstLignes().get(i).getListStation().get(j), depart.getLstLignes().get(i).nbRelationsEntreDeuxStationsSurLaLigne(depart, depart.getLstLignes().get(i).getListStation().get(j)));
+						
+						// On recupere la station la plus proche
+						
+						// On passe le boolean station.setVisited(true)
+						
+						// Et on recommence de la meme façon jusqu'a ce que l'on arrive à l'arrivée.
+						
+					
+					}
+				}
+			}			
+		}
+			
 		return null; 
 	}
 
