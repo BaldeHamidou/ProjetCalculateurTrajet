@@ -244,6 +244,9 @@ public class ReseauMetro extends Reseau {
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				getGrapheReseau().put(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(lstDonneesStations.get(i)[0]).getRelations());
 			}
+			
+			// test compte nb relations
+			System.out.println("De "+mapLignes.get("13").getListStation().get(4)+" à "+mapLignes.get("13").getListStation().get(22)+" il y a "+mapLignes.get("13").nbRelationsEntreDeuxStationsSurLaLigne(mapLignes.get("13").getListStation().get(4), mapLignes.get("13").getListStation().get(22))+" relations");
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage()

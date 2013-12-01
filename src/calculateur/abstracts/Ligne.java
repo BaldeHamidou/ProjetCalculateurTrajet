@@ -72,11 +72,80 @@ public abstract class Ligne implements ILigne {
 
 		if (this.listeStation.contains(station1)
 				&& this.listeStation.contains(station2)) {
-			// Todo
+			if(station1.equals(station2))
+				return 0;
+			else{
+				if(isTerminus(station1) && isTerminus(station2))
+					return this.listeStation.size()-1;
+				else{
+					for(int i = 0; i<station1.getStationsVoisines().size(); i++){
+						if(station1.getStationsVoisines().get(i).getLstLignes().contains(this)){
+							if(station1.getStationsVoisines().get(i).equals(station2))
+								return 1;
+							else{ 
+								if(isTheGoodStationVoisineToSearch(station1, station1.getStationsVoisines().get(i), station2)){
+									return countRelations(station1, station1.getStationsVoisines().get(i), station2);
+								}
+							}
+						}
+					}
+				}
+			}		
+		}
+		return -1;
+	}
+	
+	private int countRelations(Station stationToIgnore, Station stationNext, Station stationTofind){
+		
+		if(stationNext.equals(stationTofind))
+			return 1;
+		else{
+			ArrayList<Station> stationsVoisine = new ArrayList<Station>();
+			for(int i=0; i<stationNext.getStationsVoisines().size(); i++){
+				if(stationNext.getStationsVoisines().get(i).getLstLignes().contains(this) && !stationNext.getStationsVoisines().get(i).equals(stationToIgnore)){
+					stationsVoisine.add(stationNext.getStationsVoisines().get(i));
+				}
+			}
+			if(stationsVoisine.size() == 1)
+				return 1+countRelations(stationNext, stationsVoisine.get(0), stationTofind);
+			else{
+				for(int j=0; j<stationsVoisine.size(); j++){
+					if(isTheGoodStationVoisineToSearch(stationNext, stationsVoisine.get(j), stationTofind))
+						return 1+countRelations(stationNext, stationsVoisine.get(j), stationTofind);
+					}
+				}
 			return 0;
 		}
-
-		return -1;
-	}	
+	}
+	
+	
+	private boolean isTheGoodStationVoisineToSearch(Station stationToIgnore, Station stationNext, Station stationTofind){
+		
+		if(isTerminus(stationNext) && !stationNext.equals(stationTofind))
+			return false;
+		else if(stationNext.equals(stationTofind))
+			return true;
+		else{
+			ArrayList<Station> stationsVoisine = new ArrayList<Station>();
+			for(int i=0; i<stationNext.getStationsVoisines().size(); i++){
+				if(stationNext.getStationsVoisines().get(i).getLstLignes().contains(this) && !stationNext.getStationsVoisines().get(i).equals(stationToIgnore)){
+					stationsVoisine.add(stationNext.getStationsVoisines().get(i));
+				}
+			}
+			if(stationsVoisine.size() == 0)
+				return false;
+			else{
+				if(stationsVoisine.size() == 1)
+					return isTheGoodStationVoisineToSearch(stationNext, stationsVoisine.get(0), stationTofind);
+				else{
+					for(int j=0; j<stationsVoisine.size(); j++){
+						if(isTheGoodStationVoisineToSearch(stationNext, stationsVoisine.get(j), stationTofind))
+							return(isTheGoodStationVoisineToSearch(stationNext, stationsVoisine.get(j), stationTofind));
+					}
+				}
+				return false;
+			}	
+		}
+	}
 
 }
