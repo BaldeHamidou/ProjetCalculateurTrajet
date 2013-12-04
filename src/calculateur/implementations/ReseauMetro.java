@@ -38,18 +38,15 @@ public class ReseauMetro extends Reseau {
 			ArrayList<String[]> lstDonneesStations = CsvFileHelper
 					.readFileLstStations();
 
-			// ------------------------------- traitement Stations begin
-			// ----------------------------------------//
+			// ------------------------------- traitement Stations begin ----------------------------------------//
 			// ajout des stations à la map(à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				mapStations.put(lstDonneesStations.get(i)[0], new StationMetro(
 						lstDonneesStations.get(i)[1]));
 			}
-			// -------------------------------traitement Stations end
-			// ----------------------------------------//
+			// -------------------------------traitement Stations end----------------------------------------//
 
-			// -------------------------------traitement Lignes begin
-			// ----------------------------------------//
+			// -------------------------------traitement Lignes begin ----------------------------------------//
 			// ajout des lignes à la map (à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
 				mapLignes.put(lstDonneesLignes.get(i)[0], new LigneMetro(
@@ -120,13 +117,13 @@ public class ReseauMetro extends Reseau {
 					if ((k - 1) >= 0 && (Integer.parseInt(DonneesLigne.get(k - 1)[2]) == Integer.parseInt(DonneesLigne.get(k)[2]) - 1)) {
 						if (!lignes.get(j).getNameLigne().equals("7bis") && !lignes.get(j).getNameLigne().equals("10")){
 							mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k - 1)[0]));
-							mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
+							mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 						}
 						// ligne 7bis
 						if(lignes.get(j).getNameLigne().equals("7bis")){
 							if((k-1) <= 3){
 								mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k - 1)[0]));
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 							}
 						}
 						
@@ -134,7 +131,7 @@ public class ReseauMetro extends Reseau {
 						if(lignes.get(j).getNameLigne().equals("10")){
 							if(((k-1) == 0) || ((k-1) >= 8)){
 								mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k - 1)[0]));
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 							}
 						}
 					}
@@ -143,26 +140,26 @@ public class ReseauMetro extends Reseau {
 					if ((k + 1) < DonneesLigne.size() && (Integer.parseInt(DonneesLigne.get(k + 1)[2]) == Integer.parseInt(DonneesLigne.get(k)[2]) + 1)) {
 						mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k + 1)[0]));
 						if (!lignes.get(j).getNameLigne().equals("7bis") && !lignes.get(j).getNameLigne().equals("10") && !lignes.get(j).getNameLigne().equals("13") && !lignes.get(j).getNameLigne().equals("7"))
-							mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()));
+							mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));
 						
 						// ligne 7 
 						if(lignes.get(j).getNameLigne().equals("7")){
 						  	if((k+1) <= 28)
-						 		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()+" ou "+mapStations.get(DonneesLigne.get(33)[0]).getName()));
+						 		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()+" ou "+mapStations.get(DonneesLigne.get(33)[0]).getName(), lignes.get(j)));
 						  	if((k+1) >= 30 && (k+1) <= 33)
-						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(33)[0]).getName()));
+						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(33)[0]).getName(), lignes.get(j)));
 						  	if((k+1) >= 35)
-						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()));
+						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));
 						 } 
 						 
 						// ligne 7bis
 						if(lignes.get(j).getNameLigne().equals("7bis")){
 							if((k+1) <= 6){
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(6)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(6)[0]).getName(), lignes.get(j)));
 							}
 							else{
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
-								mapStations.get(DonneesLigne.get(k + 1)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(4)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
+								mapStations.get(DonneesLigne.get(k + 1)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(4)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 								mapStations.get(DonneesLigne.get(k + 1)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(4)[0]));
 							}
 						}
@@ -170,19 +167,19 @@ public class ReseauMetro extends Reseau {
 						// ligne 10
 						if(lignes.get(j).getNameLigne().equals("10")){
 							if(((k+1) <= 4) || ((k+1) >= 9))
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));
 							else
-								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName()));
+								mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 						}
 						
 						// ligne 13
 						if(lignes.get(j).getNameLigne().equals("13")){
 						  	if((k+1) <= 17)
-						 		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()+" ou "+mapStations.get(DonneesLigne.get(25)[0]).getName()));
+						 		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()+" ou "+mapStations.get(DonneesLigne.get(25)[0]).getName(), lignes.get(j)));
 						  	if((k+1) >= 19 && (k+1) <= 25)
-						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(25)[0]).getName()));
+						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(25)[0]).getName(), lignes.get(j)));
 						  	if((k+1) >= 27)
-						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName()));
+						  		mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationMetro(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));
 						 } 
 					}
 				}
@@ -197,10 +194,10 @@ public class ReseauMetro extends Reseau {
 			mapStations.get(DonneesLigne7.get(34)[0]).addStationVoisine(mapStations.get(DonneesLigne7.get(28)[0]));
 			
 			//ajout relations manquantes
-			mapStations.get(DonneesLigne7.get(28)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(29)[0]), mapStations.get(DonneesLigne7.get(33)[0]).getName()));
-			mapStations.get(DonneesLigne7.get(29)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(29)[0]), mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(0)[0]).getName()));
-			mapStations.get(DonneesLigne7.get(28)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(34)[0]), mapStations.get(DonneesLigne7.get(DonneesLigne7.size() - 1)[0]).getName()));
-			mapStations.get(DonneesLigne7.get(34)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(34)[0]), mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(0)[0]).getName()));
+			mapStations.get(DonneesLigne7.get(28)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(29)[0]), mapStations.get(DonneesLigne7.get(33)[0]).getName(), mapLignes.get("7")));
+			mapStations.get(DonneesLigne7.get(29)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(29)[0]), mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(0)[0]).getName(), mapLignes.get("7")));
+			mapStations.get(DonneesLigne7.get(28)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(34)[0]), mapStations.get(DonneesLigne7.get(DonneesLigne7.size() - 1)[0]).getName(), mapLignes.get("7")));
+			mapStations.get(DonneesLigne7.get(34)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(34)[0]), mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(0)[0]).getName(), mapLignes.get("7")));
 			
 		// ligne 10 cas spéciaux
 			ArrayList<String[]> DonneesLigne10 = CsvFileHelper.readFilesLignes("10");
@@ -211,10 +208,10 @@ public class ReseauMetro extends Reseau {
 			mapStations.get(DonneesLigne10.get(7)[0]).addStationVoisine(mapStations.get(DonneesLigne10.get(1)[0])); 
 			
 			//ajout relations manquantes
-			mapStations.get(DonneesLigne10.get(1)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(1)[0]), mapStations.get(DonneesLigne10.get(2)[0]), mapStations.get(DonneesLigne10.get(DonneesLigne10.size() - 1)[0]).getName()));
-			mapStations.get(DonneesLigne10.get(4)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(4)[0]), mapStations.get(DonneesLigne10.get(8)[0]), mapStations.get(DonneesLigne10.get(DonneesLigne10.size() - 1)[0]).getName()));
-			mapStations.get(DonneesLigne10.get(8)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(8)[0]), mapStations.get(DonneesLigne10.get(5)[0]), mapStations.get(DonneesLigne10.get(0)[0]).getName()));
-			mapStations.get(DonneesLigne10.get(7)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(7)[0]), mapStations.get(DonneesLigne10.get(1)[0]), mapStations.get(DonneesLigne10.get(0)[0]).getName()));
+			mapStations.get(DonneesLigne10.get(1)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(1)[0]), mapStations.get(DonneesLigne10.get(2)[0]), mapStations.get(DonneesLigne10.get(DonneesLigne10.size() - 1)[0]).getName(), mapLignes.get("10")));
+			mapStations.get(DonneesLigne10.get(4)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(4)[0]), mapStations.get(DonneesLigne10.get(8)[0]), mapStations.get(DonneesLigne10.get(DonneesLigne10.size() - 1)[0]).getName(), mapLignes.get("10")));
+			mapStations.get(DonneesLigne10.get(8)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(8)[0]), mapStations.get(DonneesLigne10.get(5)[0]), mapStations.get(DonneesLigne10.get(0)[0]).getName(), mapLignes.get("10")));
+			mapStations.get(DonneesLigne10.get(7)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(7)[0]), mapStations.get(DonneesLigne10.get(1)[0]), mapStations.get(DonneesLigne10.get(0)[0]).getName(), mapLignes.get("10")));
 			
 		// ligne 13 cas spéciaux
 			ArrayList<String[]> DonneesLigne13 = CsvFileHelper.readFilesLignes("13");
@@ -225,19 +222,19 @@ public class ReseauMetro extends Reseau {
 			mapStations.get(DonneesLigne13.get(26)[0]).addStationVoisine(mapStations.get(DonneesLigne13.get(17)[0]));
 						
 			//ajout relations manquantes
-			mapStations.get(DonneesLigne13.get(17)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(18)[0]), mapStations.get(DonneesLigne13.get(25)[0]).getName()));
-			mapStations.get(DonneesLigne13.get(18)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(18)[0]), mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(0)[0]).getName()));
-			mapStations.get(DonneesLigne13.get(17)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(26)[0]), mapStations.get(DonneesLigne13.get(DonneesLigne13.size() - 1)[0]).getName()));
-			mapStations.get(DonneesLigne13.get(26)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(26)[0]), mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(0)[0]).getName()));	
+			mapStations.get(DonneesLigne13.get(17)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(18)[0]), mapStations.get(DonneesLigne13.get(25)[0]).getName(), mapLignes.get("13")));
+			mapStations.get(DonneesLigne13.get(18)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(18)[0]), mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(0)[0]).getName(), mapLignes.get("13")));
+			mapStations.get(DonneesLigne13.get(17)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(26)[0]), mapStations.get(DonneesLigne13.get(DonneesLigne13.size() - 1)[0]).getName(), mapLignes.get("13")));
+			mapStations.get(DonneesLigne13.get(26)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne13.get(26)[0]), mapStations.get(DonneesLigne13.get(17)[0]), mapStations.get(DonneesLigne13.get(0)[0]).getName(), mapLignes.get("13")));	
 			
 			// -------------------------------traitment Station end ----------------------------------------//
 			
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
-				System.out.println(lstDonneesStations.get(i)[1]+": Stations voisines:"+mapStations.get(lstDonneesStations.get(i)[0]).getStationsVoisines());
-				/*System.out.println(lstDonneesStations.get(i)[1]
+				//System.out.println(lstDonneesStations.get(i)[1]+": Stations voisines:"+mapStations.get(lstDonneesStations.get(i)[0]).getStationsVoisines());
+				System.out.println(lstDonneesStations.get(i)[1]
 				+ ": Relations:"
 				+ mapStations.get(lstDonneesStations.get(i)[0])
-						.getRelations());*/
+						.getRelations());
 			}
 			
 			// boucle pour remplir la map du réseau
@@ -246,7 +243,9 @@ public class ReseauMetro extends Reseau {
 			}
 			
 			// test compte nb relations
-			System.out.println("De "+mapLignes.get("13").getListStation().get(4)+" à "+mapLignes.get("13").getListStation().get(22)+" il y a "+mapLignes.get("13").nbRelationsEntreDeuxStationsSurLaLigne(mapLignes.get("13").getListStation().get(4), mapLignes.get("13").getListStation().get(22))+" relations");
+			//System.out.println("De "+mapLignes.get("13").getListStation().get(4)+" à "+mapLignes.get("13").getListStation().get(22)+" il y a "+mapLignes.get("13").nbRelationsEntreDeuxStationsSurLaLigne(mapLignes.get("13").getListStation().get(4), mapLignes.get("13").getListStation().get(22))+" relations");
+			// test les relations entre deux stations
+			//System.out.println("De "+mapLignes.get("13").getListStation().get(4)+" à "+mapLignes.get("13").getListStation().get(22)+": les relations sont: "+mapLignes.get("13").relationsBetweenTwoStations(mapLignes.get("13").getListStation().get(4), mapLignes.get("13").getListStation().get(22)));
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage()

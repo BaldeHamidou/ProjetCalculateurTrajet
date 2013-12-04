@@ -67,6 +67,72 @@ public abstract class Ligne implements ILigne {
 		return this.listeTerminus.contains(station);
 	}
 	
+	public ArrayList<Relation> relationsBetweenTwoStations(Station station1,
+			Station station2){
+		
+		ArrayList<Relation> relations = new ArrayList<Relation>();
+		
+		if (this.listeStation.contains(station1)
+				&& this.listeStation.contains(station2)) {
+			if(station1.equals(station2))
+				return relations;
+			else{
+				for(int i = 0; i<station1.getStationsVoisines().size(); i++){
+					if(station1.getStationsVoisines().get(i).getLstLignes().contains(this)){
+						if(station1.getStationsVoisines().get(i).equals(station2)){
+							relations.add(Reseau.getRelationByStationStartAndEnd(station1, station2, this));
+							return relations;
+						}
+						else{ 
+							if(isTheGoodStationVoisineToSearch(station1, station1.getStationsVoisines().get(i), station2)){
+								return getNextRelations(station1, station1.getStationsVoisines().get(i), station2);
+							}
+						}
+					}
+				}
+			}		
+		}
+		return relations;
+	}
+	
+	private ArrayList<Relation> getNextRelations(Station stationToIgnore, Station stationNext, Station stationTofind){
+		
+		ArrayList<Relation> relations = new ArrayList<Relation>();
+		if(stationNext.equals(stationTofind)){
+			relations.add(Reseau.getRelationByStationStartAndEnd(stationToIgnore, stationNext, this));
+			return relations;
+		}
+		else{
+			ArrayList<Station> stationsVoisine = new ArrayList<Station>();
+			for(int i=0; i<stationNext.getStationsVoisines().size(); i++){
+				if(stationNext.getStationsVoisines().get(i).getLstLignes().contains(this) && !stationNext.getStationsVoisines().get(i).equals(stationToIgnore)){
+					stationsVoisine.add(stationNext.getStationsVoisines().get(i));
+				}
+			}
+			if(stationsVoisine.size() == 1){
+				relations.add(Reseau.getRelationByStationStartAndEnd(stationToIgnore, stationNext, this));
+				ArrayList<Relation> relationsToAdd = getNextRelations(stationNext, stationsVoisine.get(0), stationTofind);
+				for(int j=0; j<relationsToAdd.size(); j++){
+					relations.add(relationsToAdd.get(j));
+				}
+				return relations;
+			}
+			else{
+				for(int j=0; j<stationsVoisine.size(); j++){
+					if(isTheGoodStationVoisineToSearch(stationNext, stationsVoisine.get(j), stationTofind)){
+						relations.add(Reseau.getRelationByStationStartAndEnd(stationToIgnore, stationNext, this));
+						ArrayList<Relation> relationsToAdd = getNextRelations(stationNext, stationsVoisine.get(j), stationTofind);
+						for(int k=0; k<relationsToAdd.size(); k++){
+							relations.add(relationsToAdd.get(k));
+						}
+						return relations;
+					}
+				}
+			}
+			return relations;
+		}
+	}
+	
 	public int nbRelationsEntreDeuxStationsSurLaLigne(Station station1,
 			Station station2) {
 

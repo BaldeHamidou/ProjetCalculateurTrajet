@@ -8,7 +8,7 @@ import calculateur.interfaces.IReseau;
 
 public abstract class Reseau implements IReseau{
 
-	private Map<Station, ArrayList<Relation>> grapheReseau;
+	private static Map<Station, ArrayList<Relation>> grapheReseau;
 	
 	public Reseau(){
 		this.grapheReseau = new HashMap<Station, ArrayList<Relation>>();
@@ -36,6 +36,16 @@ public abstract class Reseau implements IReseau{
 		this.grapheReseau.put(station, station.getRelations());
 	}
 	
+	public static Relation getRelationByStationStartAndEnd(Station start, Station end, Ligne ligne){
+		
+		ArrayList<Relation> relations = grapheReseau.get(start);
+		for(int i=0; i<relations.size(); i++){
+		    if(relations.get(i).getStationArrivee().equals(end) && relations.get(i).getLigne().equals(ligne))
+		    	return relations.get(i);
+		}
+		return null;
+	}
+
 	public abstract void loadReseauFromCSV();
 
 }
