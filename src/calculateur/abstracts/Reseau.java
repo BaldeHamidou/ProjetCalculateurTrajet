@@ -11,11 +11,11 @@ public abstract class Reseau implements IReseau{
 	private static Map<Station, ArrayList<Relation>> grapheReseau;
 	
 	public Reseau(){
-		this.grapheReseau = new HashMap<Station, ArrayList<Relation>>();
+		Reseau.grapheReseau = new HashMap<Station, ArrayList<Relation>>();
 	}
 	
 	public Reseau(Map<Station, ArrayList<Relation>> grapheR){
-		this.grapheReseau = grapheR;
+		Reseau.grapheReseau = grapheR;
 	}
 	
 	public Map<Station, ArrayList<Relation>> getGrapheReseau() {
@@ -24,16 +24,12 @@ public abstract class Reseau implements IReseau{
 
 	public void setGrapheReseau(Map<Station, ArrayList<Relation>> grapheReseau) {
 		if(grapheReseau != null)
-		this.grapheReseau = grapheReseau;
+		Reseau.grapheReseau = grapheReseau;
 	}
 	
-	/*public void addMaillonStation(Station station, ArrayList<IRelation> relations){
-		this.grapheReseau.put(station, relations);
-	}*/
-	
 	public void addMaillonStation(Station station){
-		if(station != null && !this.grapheReseau.containsValue(station))
-		this.grapheReseau.put(station, station.getRelations());
+		if(station != null && !Reseau.grapheReseau.containsValue(station))
+		Reseau.grapheReseau.put(station, station.getRelations());
 	}
 	
 	public static Relation getRelationByStationStartAndEnd(Station start, Station end, Ligne ligne){

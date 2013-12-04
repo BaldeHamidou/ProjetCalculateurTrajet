@@ -229,13 +229,13 @@ public class ReseauMetro extends Reseau {
 			
 			// -------------------------------traitment Station end ----------------------------------------//
 			
-			for (int i = 0; i < lstDonneesStations.size(); i++) {
+			/*for (int i = 0; i < lstDonneesStations.size(); i++) {
 				//System.out.println(lstDonneesStations.get(i)[1]+": Stations voisines:"+mapStations.get(lstDonneesStations.get(i)[0]).getStationsVoisines());
 				System.out.println(lstDonneesStations.get(i)[1]
 				+ ": Relations:"
 				+ mapStations.get(lstDonneesStations.get(i)[0])
 						.getRelations());
-			}
+			}*/
 			
 			// boucle pour remplir la map du réseau
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
