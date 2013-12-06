@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import calculateur.abstracts.Ligne;
 import calculateur.abstracts.Relation;
 import calculateur.abstracts.Station;
 import calculateur.implementations.Dijkstra;
@@ -42,20 +43,18 @@ public class ConsoleInterface {
 		
 		if(!depart.equals(arrivee)){
 			try{
-				System.out.println("\tTrajet le plus rapide:");
+				System.out.println("Trajet le plus rapide:");
 				ArrayList<Relation> relationsTrajet = dijkstra.plusRapideChemin(depart, arrivee);
-				afficheTrajet(relationsTrajet);
-				System.out.println("\n");
+				afficheTrajet(relationsTrajet, depart, arrivee);
 			}
 			catch (StackOverflowError e) {
 				System.out.println("Désolé, le trajet le plus rapide pour aller de "+depart.getName()+" à "+arrivee.getName()+" n'a pas pu être calculé.\n");
 			}
 		
 			try{
-				System.out.println("\tTrajet avec le moins de changement:");
+				System.out.println("Trajet avec le moins de changement:");
 				ArrayList<Relation> relationsTrajet = dijkstra.moinsDeChangement(depart, arrivee);
-				afficheTrajet(relationsTrajet);
-				System.out.println("\n");
+				afficheTrajet(relationsTrajet, depart, arrivee);
 			}
 			catch (StackOverflowError e) {
 				System.out.println("Désolé, le trajet avec le moins de changement pour aller de "+depart.getName()+" à "+arrivee.getName()+" n'a pas pu être calculé.\n");
@@ -113,7 +112,51 @@ public class ConsoleInterface {
 		} 
 	}
 
-	private static void afficheTrajet(ArrayList<Relation> relations){
-		System.out.println(relations);
+	private static void afficheTrajet(ArrayList<Relation> relations, Station depart, Station arrivee){
+		
+		System.out.println("\tDépart: "+depart.getName()+"\tArrivée: "+arrivee.getName());
+		
+		int i = 0;
+		if(relations.size() >1){
+			ArrayList<Integer> indicesCorrespondance = new ArrayList<Integer>();
+			Ligne ligne = relations.get(0).getLigne();
+			while(i<relations.size() && relations.get(i).getLigne().equals(ligne)){
+				i++;
+				if(i<relations.size() && !relations.get(i).getLigne().equals(ligne)){
+					indicesCorrespondance.add(i-1);
+					ligne = relations.get(i).getLigne();
+				}
+			}
+			if(indicesCorrespondance.size() > 0){
+				for(int j=0; j<indicesCorrespondance.size(); j++){
+					System.out.println(" "+relations.get(indicesCorrespondance.get(j)).getLigne()+":");
+					if(j==0)
+						System.out.println("   depuis "+depart.getName());
+					else
+						System.out.println("   depuis "+relations.get(indicesCorrespondance.get(j)+1));
+					
+					System.out.println("   direction "+relations.get(indicesCorrespondance.get(j)).getDirection());
+					System.out.println("   jusqu'à "+relations.get(indicesCorrespondance.get(j)).getStationArrivee().getName()+"\n");
+				}
+				// affichage du dernier tronçon
+				System.out.println(" "+ligne+":");
+				System.out.println("   depuis "+relations.get(indicesCorrespondance.get(indicesCorrespondance.size()-1)+1).getStationDepart().getName());
+				System.out.println("   direction "+relations.get(relations.size()-1).getDirection());
+				System.out.println("   jusqu'à "+arrivee.getName()+"\n");
+			}
+			else{
+				System.out.println(" "+relations.get(0).getLigne()+":");
+				System.out.println("   depuis "+depart.getName());
+				System.out.println("   direction "+relations.get(relations.size()-1).getDirection());
+				System.out.println("   jusqu'à "+arrivee.getName()+"\n");
+			}
+		}
+		else{
+			System.out.println(relations.get(0).getLigne()+":");
+			System.out.println("   depuis "+depart.getName());
+			System.out.println("   direction "+relations.get(0).getDirection());
+			System.out.println("   jusqu'à "+arrivee.getName()+"\n");
+		}
+		
 	}
 }
