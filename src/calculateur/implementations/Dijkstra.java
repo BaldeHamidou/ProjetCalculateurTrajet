@@ -68,7 +68,7 @@ public class Dijkstra implements IAlgoCalcul {
 				}
 				return ligne.relationsBetweenTwoStations(depart, arrivee);
 			}
-
+			// sinon
 			else {
 
 				int nbRelations = -1;
@@ -87,9 +87,9 @@ public class Dijkstra implements IAlgoCalcul {
 									.get(j).getLstLignes();
 							for (int k = 0; k < lignesCorrespondanceStation
 									.size(); k++) {
-								if (!lignesStationDepart
+								/*if (!lignesStationDepart
 										.contains(lignesCorrespondanceStation
-												.get(k)))
+												.get(k)))*/
 									correspondanceNew
 											.add(lignesCorrespondanceStation
 													.get(k));
@@ -269,9 +269,9 @@ public class Dijkstra implements IAlgoCalcul {
 						ArrayList<Ligne> lignesCorrespondanceStation = stationsLigneEnCours
 								.get(j).getLstLignes();
 						for (int k = 0; k < lignesCorrespondanceStation.size(); k++) {
-							if (!lignesStationDepart
+							/*if (!lignesStationDepart
 									.contains(lignesCorrespondanceStation
-											.get(k)))
+											.get(k)))*/
 								correspondanceNew
 										.add(lignesCorrespondanceStation.get(k));
 						}
