@@ -1,4 +1,4 @@
-package calculateur.implementations;
+package calculateur.implementations.metro;
 
 import calculateur.abstracts.Ligne;
 import calculateur.abstracts.Relation;

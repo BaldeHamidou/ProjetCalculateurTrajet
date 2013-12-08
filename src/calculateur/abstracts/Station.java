@@ -2,7 +2,7 @@ package calculateur.abstracts;
 
 import java.util.ArrayList;
 
-import calculateur.implementations.RelationMetro;
+import calculateur.implementations.metro.RelationMetro;
 import calculateur.interfaces.IStation;
 
 public abstract class Station implements IStation {

@@ -10,19 +10,6 @@ import java.util.ArrayList;
 public class CsvFileHelper {
 
 	public static String separateurCSV = ";";
-	
-	/*public static String getResourcePath(String fileName) {
-		final File f = new File("");
-		final String dossierPath = f.getAbsolutePath() + File.separator
-				+ fileName;
-		return dossierPath;
-	}
-
-	public static File getResource(String fileName) {
-		final String completeFileName = getResourcePath(fileName);
-		File file = new File(completeFileName);
-		return file;
-	}*/
 
 	public static ArrayList<String> readFile(File file) throws IOException {
 
@@ -39,8 +26,37 @@ public class CsvFileHelper {
 
 		return result;
 	}
+	
+	public static ArrayList<String[]> readFileLstLignesTram() throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("TramReseau"+File.separator+"ListeLignes.csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
+	}
 
-	public static ArrayList<String[]> readFileLstLignes() throws IOException {
+	public static ArrayList<String[]> readFileLstStationsTram() throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("TramReseau"+File.separator+"ListeStations.csv"));
+		ArrayList<String[]> lstDonneesStations = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesStations.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesStations;
+	}
+	
+	public static ArrayList<String[]> readFilesLignesTram(String ligne) throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("TramReseau"+File.separator+"Ligne"+ligne+".csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
+	}
+
+	public static ArrayList<String[]> readFileLstLignesMetro() throws IOException {
 		ArrayList<String> lignesFichierCSV = readFile(new File("MetroReseau"+File.separator+"ListeLignes.csv"));
 		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
 		for(int i = 0; i<lignesFichierCSV.size(); i++){
@@ -50,7 +66,7 @@ public class CsvFileHelper {
 		
 	}
 
-	public static ArrayList<String[]> readFileLstStations() throws IOException {
+	public static ArrayList<String[]> readFileLstStationsMetro() throws IOException {
 		ArrayList<String> lignesFichierCSV = readFile(new File("MetroReseau"+File.separator+"ListeStations.csv"));
 		ArrayList<String[]> lstDonneesStations = new ArrayList<String[]>();
 		for(int i = 0; i<lignesFichierCSV.size(); i++){
@@ -59,7 +75,7 @@ public class CsvFileHelper {
 		return lstDonneesStations;
 	}
 	
-	public static ArrayList<String[]> readFilesLignes(String ligne) throws IOException {
+	public static ArrayList<String[]> readFilesLignesMetro(String ligne) throws IOException {
 		ArrayList<String> lignesFichierCSV = readFile(new File("MetroReseau"+File.separator+"Ligne"+ligne+".csv"));
 		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
 		for(int i = 0; i<lignesFichierCSV.size(); i++){

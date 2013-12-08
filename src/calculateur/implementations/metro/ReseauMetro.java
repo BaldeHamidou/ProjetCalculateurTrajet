@@ -1,4 +1,4 @@
-package calculateur.implementations;
+package calculateur.implementations.metro;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,9 +34,9 @@ public class ReseauMetro extends Reseau {
 
 		try {
 			ArrayList<String[]> lstDonneesLignes = CsvFileHelper
-					.readFileLstLignes();
+					.readFileLstLignesMetro();
 			ArrayList<String[]> lstDonneesStations = CsvFileHelper
-					.readFileLstStations();
+					.readFileLstStationsMetro();
 
 			// ------------------------------- traitement Stations begin ----------------------------------------//
 			// ajout des stations à la map(à vide : juste avec leur nom)
@@ -68,7 +68,7 @@ public class ReseauMetro extends Reseau {
 
 				// ajout stations d'une ligne
 				ArrayList<String[]> DonneesLigne = CsvFileHelper
-						.readFilesLignes(idLigne);
+						.readFilesLignesMetro(idLigne);
 				for (int k = 0; k < DonneesLigne.size(); k++) {
 					mapLignes.get(idLigne).addStation(
 							mapStations.get(DonneesLigne.get(k)[0]));
@@ -93,7 +93,7 @@ public class ReseauMetro extends Reseau {
 			// ajout des lignes de correspondances par ligne de Metro
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
 				String idLigne = lstDonneesLignes.get(i)[0];
-				ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignes(idLigne);
+				ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesMetro(idLigne);
 				for (int j = 0; j < DonneesLigne.size(); j++) {
 					for (int k = 0; k < mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().size(); k++) {
 						mapLignes.get(idLigne).addCorrespondance(mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
@@ -108,7 +108,7 @@ public class ReseauMetro extends Reseau {
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				ArrayList<Ligne> lignes = mapStations.get(lstDonneesStations.get(i)[0]).getLstLignes();
 				for (int j = 0; j < lignes.size(); j++) {
-					ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignes(lignes.get(j).getNameLigne());
+					ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesMetro(lignes.get(j).getNameLigne());
 					int k = 0;
 					while (!lstDonneesStations.get(i)[0].toString().equals(DonneesLigne.get(k)[0].toString()))
 						k++;
@@ -186,7 +186,7 @@ public class ReseauMetro extends Reseau {
 			}
 			
 		// ligne7 cas spéciaux
-			ArrayList<String[]> DonneesLigne7 = CsvFileHelper.readFilesLignes("7");
+			ArrayList<String[]> DonneesLigne7 = CsvFileHelper.readFilesLignesMetro("7");
 			// ajout stations voisines manquantes
 			mapStations.get(DonneesLigne7.get(28)[0]).addStationVoisine(mapStations.get(DonneesLigne7.get(29)[0]));
 			mapStations.get(DonneesLigne7.get(29)[0]).addStationVoisine(mapStations.get(DonneesLigne7.get(28)[0]));
@@ -200,7 +200,7 @@ public class ReseauMetro extends Reseau {
 			mapStations.get(DonneesLigne7.get(34)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne7.get(34)[0]), mapStations.get(DonneesLigne7.get(28)[0]), mapStations.get(DonneesLigne7.get(0)[0]).getName(), mapLignes.get("7")));
 			
 		// ligne 10 cas spéciaux
-			ArrayList<String[]> DonneesLigne10 = CsvFileHelper.readFilesLignes("10");
+			ArrayList<String[]> DonneesLigne10 = CsvFileHelper.readFilesLignesMetro("10");
 			// ajout stations voisines manquantes
 			mapStations.get(DonneesLigne10.get(1)[0]).addStationVoisine(mapStations.get(DonneesLigne10.get(2)[0]));
 			mapStations.get(DonneesLigne10.get(4)[0]).addStationVoisine(mapStations.get(DonneesLigne10.get(8)[0]));
@@ -214,7 +214,7 @@ public class ReseauMetro extends Reseau {
 			mapStations.get(DonneesLigne10.get(7)[0]).addRelation(new RelationMetro(mapStations.get(DonneesLigne10.get(7)[0]), mapStations.get(DonneesLigne10.get(1)[0]), mapStations.get(DonneesLigne10.get(0)[0]).getName(), mapLignes.get("10")));
 			
 		// ligne 13 cas spéciaux
-			ArrayList<String[]> DonneesLigne13 = CsvFileHelper.readFilesLignes("13");
+			ArrayList<String[]> DonneesLigne13 = CsvFileHelper.readFilesLignesMetro("13");
 			// ajout stations voisines manquantes
 			mapStations.get(DonneesLigne13.get(17)[0]).addStationVoisine(mapStations.get(DonneesLigne13.get(18)[0]));
 			mapStations.get(DonneesLigne13.get(18)[0]).addStationVoisine(mapStations.get(DonneesLigne13.get(17)[0]));

@@ -7,12 +7,13 @@ import java.util.Scanner;
 import calculateur.abstracts.Ligne;
 import calculateur.abstracts.Relation;
 import calculateur.abstracts.Station;
-import calculateur.implementations.Dijkstra;
-import calculateur.implementations.ModaliteMetro;
+import calculateur.implementations.metro.ModaliteMetro;
+import calculateur.implementations.tramway.ModaliteTram;
 
 public class ConsoleInterface {
 
 	private static ModaliteMetro ratpMetro = new ModaliteMetro();
+	private static ModaliteTram ratpTram = new ModaliteTram();
 	private static Dijkstra dijkstra;
 	private static Scanner entreeClavier = new Scanner(System.in);
 
@@ -25,9 +26,12 @@ public class ConsoleInterface {
 		while (!exit) {
 
 			// ajout des autres modalités par la suite.
-			switch (getChoice(2)) {
+			switch (getChoice(3)) {
 			case 1:
 				metroModalite();
+				break;
+			case 2:
+				tramModalite();
 				break;
 			default:
 				exit = true;
@@ -79,9 +83,10 @@ public class ConsoleInterface {
 		int choix = 0;
 		do {
 			try {
-				System.out.println("Tapez 2 pour quitter l'application \n");
+				System.out.println("Tapez 3 pour quitter l'application \n");
 				System.out.println("\tChoix de la modalité: ");
 				System.out.println("1. Metro");
+				System.out.println("2. Tramway");
 				System.out.println("Votre choix ?:");
 				choix = entreeClavier.nextInt();
 				entreeClavier.nextLine();
@@ -129,6 +134,36 @@ public class ConsoleInterface {
 		}
 	}
 
+	private static Station getStationByNameTram(boolean isDepart) {
+
+		Station station;
+		while (true) {
+			if (isDepart)
+				System.out.println("Entrez le nom de la station de départ:");
+			else
+				System.out.println("Entrez le nom de la station d'arrivée:");
+
+			String nomStation = entreeClavier.nextLine();
+			
+			// Recherche de la station
+			if (nomStation.trim().length() > 4
+					&& nomStation.trim().length() < 32) {
+				for (Station value : ratpTram.getReseau().getMapStations()
+						.values()) {
+					if (value.getName().trim().toLowerCase()
+							.equals(nomStation.trim().toLowerCase())) {
+						station = value;
+						return station;
+					}
+				}
+			}
+			System.out
+					.println("La station '"
+							+ nomStation.trim()
+							+ "' est introuvable ou n'existe pas. Recommencez votre saisie.");
+		}
+	}
+	
 	private static void afficheTrajet(ArrayList<Relation> relations,
 			Station depart, Station arrivee) {
 
@@ -199,6 +234,44 @@ public class ConsoleInterface {
 			}
 		} else
 			System.out
-					.println("Désolé le calculateur à retourner un trajet vide.");
+					.println("Désolé le calculateur à retourner un trajet vide.\nCe trajet n'est peut être pas possible en utilisant uniquement cette modalité de transport.\n");
+	}
+	
+	private static void tramModalite() {
+		
+		dijkstra = new Dijkstra(ratpTram);
+		Station depart = getStationByNameTram(true);
+		Station arrivee = getStationByNameTram(false);
+
+		if (!depart.equals(arrivee)) {
+			try {
+				System.out.println("Trajet le plus rapide:");
+				ArrayList<Relation> relationsTrajet = dijkstra
+						.plusRapideChemin(depart, arrivee);
+				afficheTrajet(relationsTrajet, depart, arrivee);
+			} catch (StackOverflowError e) {
+				System.out
+						.println("Désolé, le trajet le plus rapide pour aller de "
+								+ depart.getName()
+								+ " à "
+								+ arrivee.getName()
+								+ " n'a pas pu être calculé.\n");
+			}
+
+			try {
+				System.out.println("Trajet avec le moins de changement:");
+				ArrayList<Relation> relationsTrajet = dijkstra
+						.moinsDeChangement(depart, arrivee);
+				afficheTrajet(relationsTrajet, depart, arrivee);
+			} catch (StackOverflowError e) {
+				System.out
+						.println("Désolé, le trajet avec le moins de changement pour aller de "
+								+ depart.getName()
+								+ " à "
+								+ arrivee.getName()
+								+ " n'a pas pu être calculé.\n");
+			}
+		} else
+			System.out.println("Vous y êtes déja ! ^^");
 	}
 }
