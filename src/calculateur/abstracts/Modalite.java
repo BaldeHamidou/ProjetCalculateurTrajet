@@ -2,7 +2,11 @@ package calculateur.abstracts;
 
 import calculateur.interfaces.IModalite;
 import calculateur.interfaces.IReseau;
-
+/**
+ * 
+ * Classe abstraite d'une modalité
+ *
+ */
 public abstract class Modalite implements IModalite{
 
 	private IReseau reseau;

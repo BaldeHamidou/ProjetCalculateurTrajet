@@ -3,7 +3,11 @@ package calculateur.abstracts;
 import java.util.ArrayList;
 
 import calculateur.interfaces.ILigne;
-
+/**
+ * 
+ * Classe abstraite d'une ligne
+ *
+ */
 public abstract class Ligne implements ILigne {
 
 	private String nameLigne;
@@ -11,6 +15,10 @@ public abstract class Ligne implements ILigne {
 	private ArrayList<Station> listeTerminus;
 	private ArrayList<Ligne> listeCorrespondance;
 
+	/**
+	 * Créé une ligne avec son nom
+	 * @param nameLigne
+	 */
 	public Ligne(String nameLigne) {
 		this.nameLigne = nameLigne;
 		this.listeStation = new ArrayList<Station>();
@@ -18,6 +26,13 @@ public abstract class Ligne implements ILigne {
 		this.listeCorrespondance = new ArrayList<Ligne>();
 	}
 
+	/**
+	 * Créé une ligne avec son nom, ses différentes listes: stations, terminus et lignes de correspondances
+	 * @param nameLigne
+	 * @param listeStation
+	 * @param terminus
+	 * @param correspondances
+	 */
 	public Ligne(String nameLigne, ArrayList<Station> listeStation,
 			ArrayList<Station> terminus, ArrayList<Ligne> correspondances) {
 		this.nameLigne = nameLigne;
@@ -26,50 +41,91 @@ public abstract class Ligne implements ILigne {
 		this.listeCorrespondance = correspondances;
 	}
 
+	/**
+	 * Ajoute une station à la ligne
+	 * @param station 
+	 */
 	public void addStation(Station station) {
 		if (station != null && !this.listeStation.contains(station))
 			this.listeStation.add(station);
 	}
 
+	/**
+	 * Ajoute un terminus à la ligne
+	 * @param station
+	 */
 	public void addTerminus(Station station) {
 		if (station != null && !this.listeTerminus.contains(station))
 			this.listeTerminus.add(station);
 	}
-
+	/**
+	 * Ajoute une ligne de correspondance
+	 * @param ligneDeCorrespondance
+	 */
 	public void addCorrespondance(Ligne ligneDeCorrespondance) {
 		if (ligneDeCorrespondance != null
 				&& !this.listeCorrespondance.contains(ligneDeCorrespondance)
 				&& !this.equals(ligneDeCorrespondance))
 			this.listeCorrespondance.add(ligneDeCorrespondance);
 	}
-
+	/**
+	 * Retourne la liste des stations de la ligne
+	 * @return 
+	 */
 	public ArrayList<Station> getListStation() {
 		return this.listeStation;
 	}
 
+	/**
+	 * Retourne la liste des terminus de la ligne
+	 * @return
+	 */
 	public ArrayList<Station> getListTerminus() {
 		return listeTerminus;
 	}
 
+	/**
+	 * Retourne la liste des lignes de correspondances
+	 * @return
+	 */
 	public ArrayList<Ligne> getListCorrespondance() {
 		return this.listeCorrespondance;
 	}
 
+	/**
+	 * Modifie le nom de la ligne
+	 * @param name
+	 */
 	@Override
 	public void setNameLigne(String name) {
 		if (name != null && name.trim() != "")
 			this.nameLigne = name;
 	}
 
+	/**
+	 * Retourne le nom de la ligne
+	 * @return
+	 */
 	@Override
 	public String getNameLigne() {
 		return this.nameLigne;
 	}
 
+	/**
+	 * Retourne vrai si la station reçu en paramètre est un terminus
+	 * @param station
+	 * @return
+	 */
 	public boolean isTerminus(Station station) {
 		return this.listeTerminus.contains(station);
 	}
 
+	/**
+	 * Retourne la liste des relations entre deux stations si c'est deux stations sont sur la même ligne
+	 * @param station1
+	 * @param station2
+	 * @return
+	 */
 	public ArrayList<Relation> relationsBetweenTwoStations(Station station1,
 			Station station2) {
 
@@ -104,6 +160,13 @@ public abstract class Ligne implements ILigne {
 		return relations;
 	}
 
+	/**
+	 * Fonction récursive pour récupérer les relations jusqu'à la station à trouver 
+	 * @param stationToIgnore
+	 * @param stationNext
+	 * @param stationTofind
+	 * @return
+	 */
 	private ArrayList<Relation> getNextRelations(Station stationToIgnore,
 			Station stationNext, Station stationTofind) {
 
@@ -151,7 +214,12 @@ public abstract class Ligne implements ILigne {
 			return relations;
 		}
 	}
-
+	 /**
+	  * Retourne le nombre de relations entre deux stations sur une même ligne
+	  * @param station1
+	  * @param station2
+	  * @return
+	  */
 	public int nbRelationsEntreDeuxStationsSurLaLigne(Station station1,
 			Station station2) {
 
@@ -186,6 +254,13 @@ public abstract class Ligne implements ILigne {
 		return -1;
 	}
 
+	/**
+	 * Fonction récursive pour compter les relations
+	 * @param stationToIgnore
+	 * @param stationNext
+	 * @param stationTofind
+	 * @return
+	 */
 	private int countRelations(Station stationToIgnore, Station stationNext,
 			Station stationTofind) {
 
@@ -217,6 +292,14 @@ public abstract class Ligne implements ILigne {
 		}
 	}
 
+	/**
+	 * Retourne vrai si la station à trouver se trouve bien dans la direction de stationNext 
+	 * en partant de stationToIgnore
+	 * @param stationToIgnore
+	 * @param stationNext
+	 * @param stationTofind
+	 * @return
+	 */
 	private boolean isTheGoodStationVoisineToSearch(Station stationToIgnore,
 			Station stationNext, Station stationTofind) {
 
