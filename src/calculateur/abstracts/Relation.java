@@ -2,6 +2,11 @@ package calculateur.abstracts;
 
 import calculateur.interfaces.IRelation;
 
+/**
+ * 
+ * Classe abstraite pour les relations
+ *
+ */
 public abstract class Relation implements IRelation, Comparable<Relation>{
 
 	private Station depart;
