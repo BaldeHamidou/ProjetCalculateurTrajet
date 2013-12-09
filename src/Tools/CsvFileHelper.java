@@ -84,4 +84,33 @@ public class CsvFileHelper {
 		return lstDonneesLignes;
 		
 	}
+	
+	public static ArrayList<String[]> readFileLstLignesRer() throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("RerReseau"+File.separator+"ListeLignes.csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
+	}
+
+	public static ArrayList<String[]> readFileLstStationsRer() throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("RerReseau"+File.separator+"ListeStations.csv"));
+		ArrayList<String[]> lstDonneesStations = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesStations.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesStations;
+	}
+	
+	public static ArrayList<String[]> readFilesLignesRer(String ligne) throws IOException {
+		ArrayList<String> lignesFichierCSV = readFile(new File("RerReseau"+File.separator+"Ligne"+ligne+".csv"));
+		ArrayList<String[]> lstDonneesLignes = new ArrayList<String[]>();
+		for(int i = 0; i<lignesFichierCSV.size(); i++){
+			lstDonneesLignes.add(lignesFichierCSV.get(i).split(separateurCSV));
+		}
+		return lstDonneesLignes;
+		
+	}
 }

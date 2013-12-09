@@ -1,4 +1,4 @@
-package calculateur.implementations.tramway;
+package calculateur.implementations.rer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,19 +11,19 @@ import calculateur.abstracts.Relation;
 import calculateur.abstracts.Reseau;
 import calculateur.abstracts.Station;
 
-public class ReseauTram extends Reseau{
+public class ReseauRer extends Reseau {
 
 	private Map<String, Station> mapStations;
 	private Map<String, Ligne> mapLignes;
-	
-	public ReseauTram() {
+
+	public ReseauRer() {
 		super();
 		mapStations = new HashMap<String, Station>();
 		mapLignes = new HashMap<String, Ligne>();
 		loadReseauFromCSV();
 	}
 
-	public ReseauTram(Map<Station, ArrayList<Relation>> grapheR,
+	public ReseauRer(Map<Station, ArrayList<Relation>> grapheR,
 			Map<String, Station> stations, Map<String, Ligne> lignes) {
 		super(grapheR);
 		mapLignes = lignes;
@@ -40,14 +40,14 @@ public class ReseauTram extends Reseau{
 
 		try {
 			ArrayList<String[]> lstDonneesLignes = CsvFileHelper
-					.readFileLstLignesTram();
+					.readFileLstLignesRer();
 			ArrayList<String[]> lstDonneesStations = CsvFileHelper
-					.readFileLstStationsTram();
+					.readFileLstStationsRer();
 
 			// ------------------------------- traitement Stations begin ----------------------------------------//
 			// ajout des stations à la map(à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
-				mapStations.put(lstDonneesStations.get(i)[0], new StationTram(
+				mapStations.put(lstDonneesStations.get(i)[0], new StationRer(
 						lstDonneesStations.get(i)[1]));
 			}
 			// -------------------------------traitement Stations end----------------------------------------//
@@ -55,7 +55,7 @@ public class ReseauTram extends Reseau{
 			// -------------------------------traitement Lignes begin ----------------------------------------//
 			// ajout des lignes à la map (à vide : juste avec leur nom)
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
-				mapLignes.put(lstDonneesLignes.get(i)[0], new LigneTram(
+				mapLignes.put(lstDonneesLignes.get(i)[0], new LigneRer(
 						lstDonneesLignes.get(i)[0]));
 			}
 
@@ -74,15 +74,15 @@ public class ReseauTram extends Reseau{
 
 				// ajout stations d'une ligne
 				ArrayList<String[]> DonneesLigne = CsvFileHelper
-						.readFilesLignesTram(idLigne);
+						.readFilesLignesRer(idLigne);
 				for (int k = 0; k < DonneesLigne.size(); k++) {
 					mapLignes.get(idLigne).addStation(
 							mapStations.get(DonneesLigne.get(k)[0]));
 				}
-				// System.out.println(idLigne+" terminus:"+mapLignes.get(idLigne).getListTerminus());
+				System.out.println(idLigne+" terminus:"+mapLignes.get(idLigne).getListTerminus());
 			}
 
-			// System.out.println(mapLignes);
+			 System.out.println(mapLignes);
 			// -------------------------------traitement Lignes end-----------------------------------------//
 
 			// -------------------------------traitment Station begin----------------------------------------//
@@ -96,10 +96,10 @@ public class ReseauTram extends Reseau{
 			// -------------------------------traitment Station end----------------------------------------//
 
 			// -------------------------------traitement Lignes begin----------------------------------------//
-			// ajout des lignes de correspondances par ligne de Tram
+			// ajout des lignes de correspondances par ligne de Rer
 			for (int i = 0; i < lstDonneesLignes.size(); i++) {
 				String idLigne = lstDonneesLignes.get(i)[0];
-				ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesTram(idLigne);
+				ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesRer(idLigne);
 				for (int j = 0; j < DonneesLigne.size(); j++) {
 					for (int k = 0; k < mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().size(); k++) {
 						mapLignes.get(idLigne).addCorrespondance(mapStations.get(DonneesLigne.get(j)[0]).getLstLignes().get(k));
@@ -114,7 +114,8 @@ public class ReseauTram extends Reseau{
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				ArrayList<Ligne> lignes = mapStations.get(lstDonneesStations.get(i)[0]).getLstLignes();
 				for (int j = 0; j < lignes.size(); j++) {
-					ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesTram(lignes.get(j).getNameLigne());
+					ArrayList<String[]> DonneesLigne = CsvFileHelper.readFilesLignesRer(lignes.get(j).getNameLigne());
+					System.out.println(lignes.get(j).getNameLigne());
 					int k = 0;
 					while (!lstDonneesStations.get(i)[0].toString().equals(DonneesLigne.get(k)[0].toString()))
 						k++;
@@ -122,13 +123,13 @@ public class ReseauTram extends Reseau{
 					// relation avec la station précédente sur la ligne en cours (si les numeros d'ordre se suivent)
 					if ((k - 1) >= 0){
 					mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k - 1)[0]));
-					mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationTram(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
+					mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationRer(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k - 1)[0]), mapStations.get(DonneesLigne.get(0)[0]).getName(), lignes.get(j)));
 					}
 					
 					// relation avec la station suivante sur la ligne en cours (si les numeros d'ordre se suivent)
 					if ((k + 1) < DonneesLigne.size()){
 					mapStations.get(lstDonneesStations.get(i)[0]).addStationVoisine(mapStations.get(DonneesLigne.get(k + 1)[0]));
-					mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationTram(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));								
+					mapStations.get(lstDonneesStations.get(i)[0]).addRelation(new RelationRer(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(DonneesLigne.get(k + 1)[0]), mapStations.get(DonneesLigne.get(DonneesLigne.size() - 1)[0]).getName(), lignes.get(j)));								
 					}
 				}
 			}
@@ -137,6 +138,14 @@ public class ReseauTram extends Reseau{
 			for (int i = 0; i < lstDonneesStations.size(); i++) {
 				getGrapheReseau().put(mapStations.get(lstDonneesStations.get(i)[0]), mapStations.get(lstDonneesStations.get(i)[0]).getRelations());
 			}
+			
+			for (int i = 0; i < lstDonneesStations.size(); i++) {
+			//System.out.println(lstDonneesStations.get(i)[1]+": Stations voisines:"+mapStations.get(lstDonneesStations.get(i)[0]).getStationsVoisines());
+			System.out.println(lstDonneesStations.get(i)[1]
+			+ ": Relations:"
+			+ mapStations.get(lstDonneesStations.get(i)[0])
+					.getRelations());
+		}
 
 		} catch (IOException e) {
 			System.out.println(e.getMessage()

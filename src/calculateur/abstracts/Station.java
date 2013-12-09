@@ -63,7 +63,7 @@ public abstract class Station implements IStation {
 	 * this.lstRelation = lstRelation; }
 	 */
 
-	public void addRelation(RelationMetro relation) {
+	public void addRelation(Relation relation) {
 		if (relation != null && !this.lstRelation.contains(relation))
 			this.lstRelation.add(relation);
 	}
